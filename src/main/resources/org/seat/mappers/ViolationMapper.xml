@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seat.mappers.ViolationMapper">
+    <resultMap id="violationmap" type="org.seat.beans.Violation">
+        <id property="vid" column="vid"></id>
+        <result property="vtime" column="vtime" jdbcType="TIMESTAMP"></result>
+        <association property="user" column="uid" select="org.seat.mappers.UserMapper.selectByPrimaryKey">
+        </association>
+        <association property="seat" column="sid" select="org.seat.mappers.SeatMapper.getSeatById">
+        </association>
+    </resultMap>
+    <select id="getViolationById" resultMap="violationmap">
+        select * from violation_records where vid=#{arg0}
+    </select>
+    <insert id="insertViolation">
+        insert into violation_records values(null,#{arg0},#{arg1,jdbcType=TIMESTAMP},#{arg2})
+    </insert>
+    <delete id="deleteViolation">
+        delete from violation_records where vid=#{arg0}
+    </delete>
+    <select id="getAllViolationRecords" resultMap="violationmap">
+        select * from violation_records
+    </select>
+    <select id="getAllViolationRecordsByUid" resultMap="violationmap">
+        select * from violation_records where uid=#{arg0}
+    </select>
+</mapper>

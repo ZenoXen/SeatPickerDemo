@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>crud</title>
+    <script type="text/javascript" src="/resources/plugins/jquery.1.12.4.min.js"></script>
+    <script type="text/javascript" src="/resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/resources/js/reuse.js"></script>
+    <script type="text/javascript" src="/resources/js/main.js"></script>
+    <script type="text/javascript" src="/resources/js/seat_map.js"></script>
+    <script type="text/javascript" src="resources/js/seat_operate.js"></script>
+    <link rel="stylesheet" href="/resources/plugins/bootstrap-3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/css/crudStyle.css">
+    <script>
+        var targetIndex;
+        function printSeatInfo(){
+            var seat=getSeatByUser();
+            if(seat==null) $(".myseat").html("当前还没有选座哦，请先选座");
+            else{
+                targetIndex=seat['floor']['fid'];
+                $("#input1").val(seat['floor']['fname']);
+                $("#input2").val(seat['rownum']);
+                $("#input3").val(seat['colnum']);
+                if(seat['seatStatus']==3){
+                    $("#input4").val("如需释放座位，请去‘释放座位’页面");
+                    $(".cancel-btn").addClass("disabled");
+                }
+                else if(seat['seatStatus']==2){
+                    $("#input4").val("座位将于"+seat['appointment']['releaseTime']+"自动释放");
+                }
+            }
+        }
+        $(function(){
+            printSeatInfo();
+            $(".close-btn1").on("click",function(){
+                $("#modal1").modal("hide");
+            });
+            $(".confirm-btn1").on("click",function(){
+                var rownum=$("#input2").val(),colnum=$("#input3").val();
+                cancelSeat(targetIndex,rownum,colnum);
+                $("#modal1").modal("hide");
+            });
+            $(".cancel-btn").on("click",function () {
+                $("#modal1").modal("show");
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 myseat">
+            <form id="form1">
+                <div class="form-group">
+                    <label for="input1">楼层</label>
+                    <input type="text" class="form-control" id="input1" readonly="true">
+                </div>
+                <div class="form-group">
+                    <label for="input2">排号</label>
+                    <input type="text" class="form-control" id="input2" readonly="true">
+                </div>
+                <div class="form-group">
+                    <label for="input3">列号</label>
+                    <input type="text" class="form-control" id="input3" readonly="true">
+                </div>
+                <div class="form-group">
+                    <label for="input4">座位状态</label>
+                    <input type="text" class="form-control" id="input4" readonly="true">
+                </div>
+            </form>
+            <button type="button" class="btn btn-danger cancel-btn">取消预约</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel1">取消预约</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody1">
+                    确认要取消这个预约吗?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-btn1" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-danger confirm-btn1">确认取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

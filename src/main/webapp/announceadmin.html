@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>crud</title>
+    <script type="text/javascript" src="/resources/plugins/jquery.1.12.4.min.js"></script>
+    <script type="text/javascript" src="/resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/resources/js/reuse.js"></script>
+    <link rel="stylesheet" href="/resources/plugins/bootstrap-3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/css/crudStyle.css">
+    <script>
+        var targetIndex;
+
+        function addClickEvent(){
+            $(".delete-btn").on("click",function () {
+                targetIndex=$(this).attr("index");
+                var result=getAnnouncement(targetIndex);
+                var modalContent="删除公告 "+result["title"]+" ";
+                $("#modal3").modal("show");
+                $("#modalBody3").html("确认要"+modalContent+"吗?");
+            });
+            $(".update-btn").on("click",function(){
+                targetIndex=$(this).attr("index");
+                var result=getAnnouncement(targetIndex);
+                $("#title2").val(result['title']);
+                $("#area2").val(result['content']);
+                $("#modal2").modal("show");
+            });
+        }
+        function printPage(pageNum){
+            var page=getAnnouncePage(pageNum);
+            $("#tableBody").html("");
+            for(var i=0;i<page["announcementList"].length;i++){
+                var announcement=page["announcementList"][i];
+                var tr=$("<tr></tr>");
+                tr.append($("<th>"+announcement["announcementId"]+"</th>"));
+                tr.append($("<td>"+announcement["title"]+"</td>"));
+                tr.append($("<td>"+announcement["announcementDate"]+"</td>"));
+                var btn1=$("<button class='btn btn-sm update-btn btn-success' index='"+announcement["announcementId"]+"'></button>");
+                btn1.text("修改");
+                var btn2=$("<button class='btn btn-danger btn-sm delete-btn' index='"+announcement["announcementId"]+"'></button>");
+                btn2.text("删除");
+                var btn1td=$("<td></td>"),btn2td=$("<td></td>");
+                btn1td.append(btn1);
+                btn2td.append(btn2);
+                tr.append(btn1td);
+                tr.append(btn2td);
+                $("#tableBody").append(tr);
+            }
+            printPageBtn(page);
+            addClickEvent();
+        }
+        $(function(){
+            printPage(1);
+            addClickEvent();
+            $(".add-btn").on("click",function(){
+                $("#modal1").modal("show");
+            });
+            $(".close-btn1").on("click",function(){
+                $("#modal1").modal("hide");
+            });
+            $(".confirm-btn1").on("click",function(){
+                addAnnouncement($("#title1").val(),$("#area1").val());
+                $("#modal1").modal("hide");
+            });
+            $(".close-btn2").on("click",function () {
+                $("#modal2").modal("hide");
+            });
+            $(".confirm-btn2").on("click",function(){
+                updateAnnouncement(targetIndex,$("#title2").val(),$("#area2").val());
+                $("#modal2").modal("hide");
+            });
+            $(".close-btn3").on("click",function () {
+                $("#modal3").modal("hide");
+            });
+            $(".confirm-btn3").on("click",function(){
+                deleteAnnouncement(targetIndex);
+                $("#modal3").modal("hide");
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-11">
+            <button class="btn btn-success add-btn">新增</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">编号</th>
+                    <th scope="col">标题</th>
+                    <th scope="col">发布时间</th>
+                    <th scope="col">修改</th>
+                    <th scope="col">删除</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            总共<span id="pageTotal">xxx</span>页,当前在
+            <span id="pageCurrent">xxx</span>页
+        </div>
+        <div class="col-lg-offset-4 col-lg-4">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- 添加 -->
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel1">确认</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody1">
+                    <form id="form1">
+                        <div class="form-group">
+                            <label for="title1">标题</label>
+                            <input type="text" name="title" class="form-control" id="title1" placeholder="请输入标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="area1">内容</label>
+                            <textarea name="content" class="form-control" id="area1" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-btn1" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary confirm-btn1">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 修改-->
+    <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel2">确认</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody2">
+                    <form id="form2">
+                        <div class="form-group">
+                            <label for="title2">标题</label>
+                            <input type="text" class="form-control" id="title2" placeholder="请输入标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="area2">内容</label>
+                            <textarea class="form-control" id="area2" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-btn2" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary confirm-btn2">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 删除 -->
+    <div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel3">确认</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody3">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-btn3" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary confirm-btn3">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

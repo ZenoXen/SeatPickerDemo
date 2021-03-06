@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>crud</title>
+    <script type="text/javascript" src="/resources/plugins/jquery.1.12.4.min.js"></script>
+    <script type="text/javascript" src="/resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/resources/js/reuse.js"></script>
+    <link rel="stylesheet" href="/resources/plugins/bootstrap-3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/css/crudStyle.css">
+    <script>
+        var targetIndex;
+        function addClickEvent(){
+            $(".delete-btn").on("click",function(){
+                targetIndex=$(this).attr("index");
+                $("#modalBody1").html("确定要删除该违规记录吗？");
+                $("#modal1").modal("show");
+            });
+        }
+        function printPage(pageNum){
+            var page=getViolationPage(pageNum);
+            $("#tableBody").html("");
+            for(var i=0;i<page["violationList"].length;i++){
+                var violation=page["violationList"][i];
+                var tr=$("<tr></tr>");
+                tr.append($("<th>"+violation["vid"]+"</th>"));
+                tr.append($("<td>"+violation['user']['uname']+"</td>"));
+                tr.append($("<td>"+violation["vtime"]+"</td>"));
+                tr.append($("<td>"+violation['seat']['floor']['fname']+"</td>"));
+                tr.append($("<td>"+(violation['seat']['rownum'])+"排"+(violation['seat']['colnum'])+"列"+"</td>"));
+                var btn1=$("<button class='btn btn-sm delete-btn btn-success' index='"+violation['vid']+"'></button>");
+                btn1.text("删除");
+                var btn1td=$("<td></td>");
+                btn1td.append(btn1);
+                tr.append(btn1td);
+                $("#tableBody").append(tr);
+            }
+            printPageBtn(page);
+            addClickEvent();
+        }
+        $(function(){
+            printPage(1);
+            $(".close-btn1").on("click",function(){
+                $("#modal1").modal("hide");
+            });
+            $(".confirm-btn1").on("click",function(){
+                deleteViolation(targetIndex);
+                $("#modal1").modal("hide");
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">编号</th>
+                    <th scope="col">违规用户</th>
+                    <th scope="col">违规时间</th>
+                    <th scope="col">楼层</th>
+                    <th scope="col">座位</th>
+                    <th scope="col">删除</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            总共<span id="pageTotal">xxx</span>页,当前在
+            <span id="pageCurrent">xxx</span>页
+        </div>
+        <div class="col-lg-offset-4 col-lg-4">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel1">确认</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody1">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-btn1" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary confirm-btn1">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

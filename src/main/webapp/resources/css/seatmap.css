@@ -1,0 +1,30 @@
+.mapBody{
+    overflow: auto;
+    width:2000px;
+}
+.seat-list {
+    list-style: none;/*去掉.seat-list样式*/
+}
+.seat-list .seat-item {
+    float:left;/*使li水平平铺*/
+}
+/*为奇数的li*/
+.seat-list .seat-item:nth-child(odd) {
+}
+/*椅子的样式*/
+.seat-list[name = "chair"] .seat-item img {
+    height: 23px;/*位置宽高*/
+    width: 23px;
+}
+/*每行第一个椅子*/
+.seat-list[name = "chair"] .seat-item:first-child img {
+    margin-left:0px;
+}
+/*奇数椅子*/
+.seat-list[name = "chair"] .seat-item:nth-child(2n+3) img {
+    margin-left:12px;/*异桌椅子之间的距离*/
+}
+/*偶数椅子*/
+.seat-list[name = "chair"] .seat-item:nth-child(even) img {
+    margin-left:15px;/*同桌椅子之间的距离*/
+}  

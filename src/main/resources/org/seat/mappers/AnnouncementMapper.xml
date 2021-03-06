@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seat.mappers.AnnouncementMapper">
+  <resultMap id="BaseResultMap" type="org.seat.beans.Announcement">
+    <id column="Announcement_id" jdbcType="INTEGER" property="announcementId" />
+    <result column="Title" jdbcType="VARCHAR" property="title" />
+    <result column="Announcement_date" jdbcType="TIMESTAMP" property="announcementDate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.seat.beans.Announcement">
+    <result column="Content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Announcement_id, Title, Announcement_date
+  </sql>
+  <sql id="Blob_Column_List">
+    Content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="org.seat.beans.AnnouncementExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from announcements
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="org.seat.beans.AnnouncementExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from announcements
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from announcements
+    where Announcement_id = #{announcementId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from announcements
+    where Announcement_id = #{announcementId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.seat.beans.AnnouncementExample">
+    delete from announcements
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.seat.beans.Announcement">
+    insert into announcements (Announcement_id, Title, Announcement_date, 
+      Content)
+    values (#{announcementId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{announcementDate,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.seat.beans.Announcement">
+    insert into announcements
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="announcementId != null">
+        Announcement_id,
+      </if>
+      <if test="title != null">
+        Title,
+      </if>
+      <if test="announcementDate != null">
+        Announcement_date,
+      </if>
+      <if test="content != null">
+        Content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="announcementId != null">
+        #{announcementId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="announcementDate != null">
+        #{announcementDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.seat.beans.AnnouncementExample" resultType="java.lang.Long">
+    select count(*) from announcements
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update announcements
+    <set>
+      <if test="record.announcementId != null">
+        Announcement_id = #{record.announcementId,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        Title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.announcementDate != null">
+        Announcement_date = #{record.announcementDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null">
+        Content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update announcements
+    set Announcement_id = #{record.announcementId,jdbcType=INTEGER},
+      Title = #{record.title,jdbcType=VARCHAR},
+      Announcement_date = #{record.announcementDate,jdbcType=TIMESTAMP},
+      Content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update announcements
+    set Announcement_id = #{record.announcementId,jdbcType=INTEGER},
+      Title = #{record.title,jdbcType=VARCHAR},
+      Announcement_date = #{record.announcementDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.seat.beans.Announcement">
+    update announcements
+    <set>
+      <if test="title != null">
+        Title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="announcementDate != null">
+        Announcement_date = #{announcementDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        Content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where Announcement_id = #{announcementId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.seat.beans.Announcement">
+    update announcements
+    set Title = #{title,jdbcType=VARCHAR},
+      Announcement_date = #{announcementDate,jdbcType=TIMESTAMP},
+      Content = #{content,jdbcType=LONGVARCHAR}
+    where Announcement_id = #{announcementId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.seat.beans.Announcement">
+    update announcements
+    set Title = #{title,jdbcType=VARCHAR},
+      Announcement_date = #{announcementDate,jdbcType=TIMESTAMP}
+    where Announcement_id = #{announcementId,jdbcType=INTEGER}
+  </update>
+  <select id="selectLatest" resultType="announcement">
+    select * from announcements order by announcement_id desc limit 1
+  </select>
+</mapper>

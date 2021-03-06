@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>crud</title>
+    <script type="text/javascript" src="/resources/plugins/jquery.1.12.4.min.js"></script>
+    <script type="text/javascript" src="/resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/resources/js/reuse.js"></script>
+    <link rel="stylesheet" href="/resources/plugins/bootstrap-3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/css/crudStyle.css">
+    <script>
+        var targetIndex;
+        function addClickEvent(){
+            $(".verify-btn").on("click",function(){
+                targetIndex=$(this).attr("index");
+                var result=getTipOff(targetIndex);
+                $("#input1").val(result['accused']['uname']);
+                $("#input2").val(result['ttime']);
+                $("#input3").val(result['tipster']['uname']);
+                $("#input4").val(result['seat']['floor']['fname']);
+                $("#input5").val(result['seat']['sid']);
+                $("#input6").val(result['remark']);
+                $("#modal1").modal("show");
+            });
+        }
+        function printPage(pageNum){
+            var page=getTipoffPage(pageNum);
+            $("#tableBody").html("");
+            for(var i=0;i<page["tipoffList"].length;i++){
+                var tipoff=page["tipoffList"][i];
+                var tr=$("<tr></tr>");
+                tr.append($("<th>"+tipoff["tid"]+"</th>"));
+                tr.append($("<td>"+tipoff['accused']['uname']+"</td>"));
+                tr.append($("<td>"+tipoff["ttime"]+"</td>"));
+                tr.append($("<td>"+tipoff['tipster']['uname']+"</td>"));
+                tr.append($("<td>"+tipoff['seat']['floor']['fname']+"</td>"));
+                tr.append($("<td>"+(tipoff['seat']['rownum'])+"排"+(tipoff['seat']['colnum'])+"列"+"</td>"));
+                var btn1=$("<button class='btn btn-sm verify-btn btn-success' index='"+tipoff['tid']+"'></button>");
+                btn1.text("审核");
+                var btn1td=$("<td></td>");
+                btn1td.append(btn1);
+                tr.append(btn1td);
+                $("#tableBody").append(tr);
+            }
+            printPageBtn(page);
+            addClickEvent();
+        }
+        $(function(){
+            printPage(1);
+            $(".close-btn1").on("click",function(){
+                $("#modal1").modal("hide");
+            });
+            $(".confirm-btn1").on("click",function(){
+                handleTipoff(targetIndex);
+                $("#modal1").modal("hide");
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">编号</th>
+                    <th scope="col">被举报者</th>
+                    <th scope="col">举报时间</th>
+                    <th scope="col">举报者</th>
+                    <th scope="col">楼层</th>
+                    <th scope="col">座位</th>
+                    <th scope="col">审核</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            总共<span id="pageTotal">xxx</span>页,当前在
+            <span id="pageCurrent">xxx</span>页
+        </div>
+        <div class="col-lg-offset-4 col-lg-4">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel1">确认</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody1">
+                    <form id="form1">
+                        <div class="form-group">
+                            <label for="input1">被举报者</label>
+                            <input type="text" name="title" class="form-control" id="input1" readonly="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="input2">举报时间</label>
+                            <input type="text" name="title" class="form-control" id="input2" readonly="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="input3">举报者</label>
+                            <input type="text" name="title" class="form-control" id="input3" readonly="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="input4">楼层</label>
+                            <input type="text" name="title" class="form-control" id="input4" readonly="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="input5">座位号</label>
+                            <input type="text" name="title" class="form-control" id="input5" readonly="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="input6">备注</label>
+                            <textarea name="content" class="form-control" id="input6" rows="4" readonly="true"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-btn1" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary confirm-btn1">通过</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

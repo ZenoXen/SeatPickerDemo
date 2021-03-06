@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<title>登录</title>
+	<link rel="stylesheet" href="/resources/css/login.css">
+	<link rel="stylesheet" href="/resources/plugins/bootstrap-3.3.0/css/bootstrap.min.css">
+	<script type="text/javascript" src="/resources/plugins/jquery.1.12.4.min.js"></script>
+	<script type="text/javascript" src="/resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+	<script>
+		$(function(){
+			$("form").hide();
+			$("button").hide();
+			$("form").eq(0).show();
+			$("button").eq(0).show();
+			$(".nav-item").click(function(){
+				var idx=$(this).index();
+				$(".nav-item").removeClass("active");
+				$(this).addClass("active");
+				$("form").hide();
+				$("button").hide();
+				$("form").eq(idx).show();
+				$("button").eq(idx).show();
+			});
+			$("#userBtn").on("click",function () {
+				var param={"uname":$("#uname").val(),"upwd":$("#upwd").val()};
+				$.ajax({
+					url:"/account/user",
+					dataType:"json",
+					contentType:"application/json",
+					async:false,
+					data:JSON.stringify(param),
+					type:"POST",
+					success:function(result){
+						if(result['successful'])
+							$(location).attr('href', '/index.html');
+						else
+							alert("登录失败");
+					}
+				});
+			});
+
+			$("#adminBtn").on("click",function () {
+				var param={"adminName":$("#adminName").val(),"adminPwd":$("#adminPwd").val()};
+				$.ajax({
+					url:"/account/admin",
+					dataType:"json",
+					contentType:"application/json",
+					async:false,
+					data:JSON.stringify(param),
+					type:"POST",
+					success:function(result){
+						if(result['successful']){
+							$(location).attr('href', '/adminPage.html');
+						}
+						else
+							alert("登录失败");
+					}
+				});
+			});
+			$("#registerBtn").on("click",function () {
+				var param={"uname":$("#registerName").val(),"upwd":$("#registerPwd").val()};
+				$.ajax({
+					url:"/account/register",
+					data:JSON.stringify(param),
+					type:"POST",
+					dataType:"json",
+					contentType:"application/json",
+					async:true,
+					success:function(result){
+						if(result['successful']){
+							if(window.confirm("注册成功，将自动跳转到主页"))
+								$(location).attr('href', '/index.html');
+						}
+						else
+							alert("用户名已存在");
+					}
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row logo">
+			<div class="col-lg-12">
+				<a href="http://www.zcmu.edu.cn"><img src="/resources/images/school_logo.jpg" class="vertical-center"></a>
+				<h1 class="vertical-center">图书馆选座系统</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-8">
+				<img src="/resources/images/background.jpg" class="rounded" width="700" height="250">
+			</div>
+			<div class="col-lg-4">
+				<ul class="nav nav-tabs">
+					<li class="nav-item active">
+					  <a class="nav-link " href="#" id="user">普通用户</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="#" id="admin">管理用户登录</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#" id="register">注册</a>
+					</li>
+				</ul>
+				<form id="userForm">
+					<div class="form-group">
+						<label for="uname">用户名</label>
+						<input type="text" class="form-control" id="uname" aria-describedby="emailHelp">
+					</div>
+					<div class="form-group">
+						<label for="upwd">密码</label>
+						<input type="password" class="form-control" id="upwd">
+					</div>
+				</form>
+				<button class="btn btn-primary" id="userBtn">登录</button>
+				<form id="adminForm">
+					<div class="form-group">
+					  <label for="adminName">管理用户名</label>
+					  <input type="text" class="form-control" id="adminName" aria-describedby="emailHelp">
+					</div>
+					<div class="form-group">
+					  <label for="adminPwd">密码</label>
+					  <input type="password" class="form-control" id="adminPwd">
+					</div>
+
+				</form>
+				<button class="btn btn-primary" id="adminBtn">登录</button>
+				<form id="registerForm">
+					<div class="form-group">
+					  <label for="registerName">用户名</label>
+					  <input type="text" class="form-control" id="registerName" aria-describedby="emailHelp">
+					</div>
+					<div class="form-group">
+					  <label for="registerPwd">密码</label>
+					  <input type="password" class="form-control" id="registerPwd">
+					</div>
+
+				</form>
+				<button class="btn btn-primary" id="registerBtn">注册</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

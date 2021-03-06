@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seat.mappers.FloorMapper">
+    <resultMap id="floorinfo" type="floor">
+        <id column="fid" property="fid"></id>
+        <result property="fname" column="fname"></result>
+    </resultMap>
+    <resultMap id="floormap" type="floor">
+        <id column="fid" property="fid"></id>
+        <result property="fname" column="fname"></result>
+        <result column="row" property="row"></result>
+        <result column="col" property="col"></result>
+        <collection property="seats" ofType="org.seat.beans.Seat" >
+            <id property="sid" column="sid"></id>
+            <result column="seat_status" property="seatStatus"></result>
+            <result column="colnum" property="colnum"></result>
+            <result column="rownum" property="rownum"></result>
+            <association property="user" column="uid" select="org.seat.mappers.UserMapper.selectByPrimaryKey">
+            </association>
+        </collection>
+    </resultMap>
+    <select id="getFloorById" resultMap="floormap">
+        select * from (select * from floors where fid=#{arg0}) f left join seats s on f.fid=s.fid
+    </select>
+    <select id="getAllFloors" resultMap="floorinfo">
+        select * from floors
+    </select>
+    <select id="getFloorByName" resultType="floor">
+        select* from floors where fname=#{arg0}
+    </select>
+    <insert id="addFloor" parameterType="floor">
+        insert into floors values(null,#{fname},#{row},#{col})
+    </insert>
+    <delete id="deleteFloor">
+        delete from floors where fid=#{arg0}
+    </delete>
+</mapper>

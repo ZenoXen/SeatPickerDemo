@@ -1,0 +1,26 @@
+html{
+	color:#222;
+}
+a{
+	text-decoration: none;
+}
+ .vertical-center{
+ 	position:absolute;
+ 	top:50%;
+ }
+body{
+	min-width:1200px;
+	line-height: 1.5rem;
+	background-color: #ededef;
+	color:#222;
+	font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+}
+.logo{
+	height:100px;
+	position:relative;
+}
+.logo h1{
+    color:#555;
+    font-size:1.8em;
+	left:370px;
+}

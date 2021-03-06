@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<title>后台管理系统</title>
+	<script src="resources/plugins/jquery.1.12.4.min.js"></script>
+	<script src="resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+	<link href="resources/plugins/fullPage/jquery.fullPage.css" rel="stylesheet"/>
+	<link href="resources/plugins/bootstrap-3.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/material-design-iconic-font-2.2.0/css/material-design-iconic-font.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/waves-0.7.5/waves.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
+	<link href="resources/css/admin.css" rel="stylesheet"/>
+	<script type="text/javascript">
+		function getAdminNameFromServer(){
+			var name;
+			$.ajax({
+				url:"/admin",
+				dataType:"json",
+				contentType:"application/json",
+				async:false,
+				type:"GET",
+				success:function(result){
+					name=result;
+				}
+			});
+			return name;
+		}
+		function exitLogin(){
+			$.ajax({
+				url:"/admin/exit",
+				dataType:"json",
+				contentType:"application/json",
+				async:true,
+				type:"PUT",
+				success:function(result){
+					$(location).attr('href', 'login.html');
+				}
+			});
+		}
+		$(function(){
+			$("#userName").text(getAdminNameFromServer()['adminName']);
+			$("#exitLogin").on("click",function(){
+				exitLogin();
+			});
+		});
+	</script>
+	<style>
+	#zheng-upms-server #header {background: #29A176;}
+	#zheng-upms-server .content_tab{background: #29A176;}
+	#zheng-upms-server .s-profile>a{background: url(resources/images/zheng-upms.png) left top no-repeat;}
+	</style>
+</head>
+<body>
+<header id="header">
+	<ul id="menu">
+		<li id="guide" class="line-trigger">
+			<div class="line-wrap">
+				<div class="line top"></div>
+				<div class="line center"></div>
+				<div class="line bottom"></div>
+			</div>
+		</li>
+		<li id="logo" class="hidden-xs">
+			<span id="system_title">管理系统</span>
+		</li>
+		<li class="pull-right">
+			<ul class="hi-menu">
+				<li class="dropdown">
+					<a class="waves-effect waves-light" data-toggle="dropdown" href="javascript:;">
+						<i class="him-icon zmdi zmdi-more-vert"></i>
+					</a>
+					<ul class="dropdown-menu dm-icon pull-right">
+						<li class="hidden-xs">
+							<a class="waves-effect" data-ma-action="fullscreen" href="javascript:fullPage();"><i class="zmdi zmdi-fullscreen"></i> 全屏模式</a>
+						</li>
+						<li>
+							<a class="waves-effect" href="javascript:;" id="exitLogin"><i class="zmdi zmdi-run"></i> 退出登录</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</header>
+
+
+<section id="main">
+	<!-- 左侧导航区 -->
+	<aside id="sidebar">
+		<!-- 个人资料区 -->
+		<div class="s-profile">
+			<a class="waves-effect waves-light" href="javascript:;">
+				<div class="sp-pic">
+					<img src="resources/images/avatar.jpg" alt="用户头像"/>
+				</div>
+				<div class="sp-info">
+					<span id="userName">xxx</span>您好！
+				</div>
+			</a>
+		</div>
+		<!-- /个人资料区 -->
+		<!-- 菜单区 -->
+		<ul class="main-menu">
+			<li class="sub-menu system_menus system_1 0">
+			<a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-accounts-list"></i> 查看管理项</a>
+			<ul>
+				<li><a class="waves-effect" href="javascript:Tab.addTab('用户管理', 'useradmin.html');">用户管理</a></li>
+				<li><a class="waves-effect" href="javascript:Tab.addTab('楼层管理', 'libraryadmin.html');">楼层管理</a></li>
+				<li><a class="waves-effect" href="javascript:Tab.addTab('处理举报记录', 'handle.html');">处理举报</a></li>
+				<li><a class="waves-effect" href="javascript:Tab.addTab('查看违规记录', 'violationadmin.html');">违规记录</a></li>
+				<li><a class="waves-effect" href="javascript:Tab.addTab('公告管理', 'announceadmin.html');">公告管理</a></li>
+			</ul>
+			</li>
+		</ul>
+		<!-- /菜单区 -->
+	</aside>
+	<!-- /左侧导航区 -->
+	<section id="content">
+		<div class="content_tab">
+			<div class="tab_left">
+				<a class="waves-effect waves-light" href="javascript:;"><i class="zmdi zmdi-chevron-left"></i></a>
+			</div>
+			<div class="tab_right">
+				<a class="waves-effect waves-light" href="javascript:;"><i class="zmdi zmdi-chevron-right"></i></a>
+			</div>
+			<ul id="tabs" class="tabs">
+				<li id="tab_home" data-index="home" data-closeable="false" class="cur">
+					<span class="waves-effect waves-light">首页</span>
+				</li>
+			</ul>
+		</div>
+		<div class="content_main">
+			<div id="iframe_home" class="iframe cur">
+				<p>欢迎来到后台管理系统!</p>
+				<p>你可以在这里：</p>
+				<p>（1）添加楼层或者管理现有楼层</p>
+				<p>（2）对用户进行封禁或者解封</p>
+				<p>（3）发布新的公告或者删除已发布的公告</p>
+				<p>（4）处理用户发起的举报</p>
+				<p>（5）查看用户的违规记录，删除其中的某些记录</p>
+			</div>
+		</div>
+	</section>
+</section>
+<footer id="footer"></footer>
+
+
+<script src="resources/plugins/waves-0.7.5/waves.min.js"></script>
+<script src="resources/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="resources/plugins/BootstrapMenu.min.js"></script>
+<script src="resources/plugins/device.min.js"></script>
+<script src="resources/plugins/fullPage/jquery.fullPage.min.js"></script>
+<script src="resources/plugins/fullPage/jquery.jdirk.min.js"></script>
+<script src="resources/plugins/jquery.cookie.js"></script>
+
+<script src="resources/js/admin.js"></script>
+</body>
+</html>

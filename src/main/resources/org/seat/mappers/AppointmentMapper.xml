@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seat.mappers.AppointmentMapper">
+    <resultMap id="appointmentmap" type="org.seat.beans.Appointment">
+        <id column="aid" property="aid"></id>
+        <result column="atime" property="atime" jdbcType="TIMESTAMP"></result>
+        <result column="aspan" property="aspan"></result>
+        <result property="isCanceled" column="iscanceled"></result>
+        <result property="releaseTime" column="release_time" jdbcType="TIMESTAMP"></result>
+        <result property="isReleased" column="isreleased"></result>
+        <result property="registerTime" column="register_time" jdbcType="TIMESTAMP"></result>
+        <association property="user" column="uid" select="org.seat.mappers.UserMapper.selectByPrimaryKey">
+        </association>
+    </resultMap>
+    <select id="getAllAppointmentRecords" resultMap="appointmentmap">
+        select * from appointment_records
+    </select>
+    <select id="getAllAppointmentRecordsByUid" resultMap="appointmentmap">
+        select * from appointment_records where uid=#{arg0}
+    </select>
+    <select id="getAppointmentById" resultMap="appointmentmap">
+        select * from appointment_records where aid=#{arg0}
+    </select>
+    <insert id="insertAppointment" useGeneratedKeys="true" keyProperty="aid" keyColumn="aid">
+        insert into appointment_records values(null,#{user.uid},#{atime,jdbcType=TIMESTAMP},0,#{releaseTime,jdbcType=TIMESTAMP},0,null,null)
+    </insert>
+    <update id="updateRegisterTime">
+        update appointment_records set register_time=#{arg1} where aid=#{arg0}
+    </update>
+    <update id="updateAspan">
+        update appointment_records set aspan=#{arg1} where aid=#{arg0}
+    </update>
+    <update id="updateReleaseStatus">
+        update appointment_records set isreleased=1 where aid=#{arg0}
+    </update>
+    <update id="updateCancelStatus">
+        update appointment_records set iscanceled=1 where aid=#{arg0}
+    </update>
+</mapper>

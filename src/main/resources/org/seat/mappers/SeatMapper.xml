@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seat.mappers.SeatMapper">
+    <resultMap id="seatmap" type="org.seat.beans.Seat">
+        <id column="sid" property="sid"></id>
+        <result property="seatStatus" column="seat_status"></result>
+        <result property="rownum" column="rownum"></result>
+        <result property="colnum" column="colnum"></result>
+        <association property="appointment" select="org.seat.mappers.AppointmentMapper.getAppointmentById" column="aid">
+        </association>
+        <association property="floor" select="org.seat.mappers.FloorMapper.getFloorById" column="fid">
+        </association>
+        <association property="user" column="uid" select="org.seat.mappers.UserMapper.selectByPrimaryKey">
+        </association>
+    </resultMap>
+    <select id="getSeatById" resultMap="seatmap">
+        select * from seats where sid=#{arg0}
+    </select>
+    <select id="getSeatByUser" resultMap="seatmap">
+        select * from seats where uid=#{arg0}
+    </select>
+    <select id="getSeatByLocation" resultMap="seatmap">
+        select *from seats where fid=#{arg0} and rownum=#{arg1} and colnum=#{arg2}
+    </select>
+    <select id="getSeatByAppointment" resultMap="seatmap">
+        select * from seats where aid=#{arg0}
+    </select>
+    <update id="updateSeatStatus">
+        update seats set seat_status=#{arg3} where fid=#{arg0} and rownum=#{arg1} and colnum=#{arg2}
+    </update>
+    <update id="updateSeatUser">
+        update seats set uid=#{arg3} where fid=#{arg0} and rownum=#{arg1} and colnum=#{arg2}
+    </update>
+    <update id="registerSeat">
+        update seats set seat_status=3 where fid=#{arg0} and rownum=#{arg1} and colnum=#{arg2}
+    </update>
+    <update id="updateSeatAppointment">
+        update seats set aid=#{arg3} where fid=#{arg0} and rownum=#{arg1} and colnum=#{arg2}
+    </update>
+    <update id="releaseSeat">
+        update seats set uid=null,seat_status=1,aid=null where fid=#{arg0} and rownum=#{arg1} and colnum=#{arg2}
+    </update>
+    <insert id="addSeatsForFloor">
+        insert into seats values
+        <foreach collection="list" item="seat" separator=",">
+            (null,#{seat.floor.fid},null,1,null,#{seat.rownum},#{seat.colnum})
+        </foreach>
+    </insert>
+</mapper>

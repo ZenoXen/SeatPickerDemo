@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seat.mappers.TipoffMapper">
+    <resultMap id="tipoffmap" type="org.seat.beans.Tipoff">
+        <id column="tid" jdbcType="INTEGER" property="tid" />
+        <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+        <result column="ttime" jdbcType="TIMESTAMP" property="ttime" />
+        <association property="accused" column="accused_id" select="org.seat.mappers.UserMapper.selectByPrimaryKey">
+        </association>
+        <association property="tipster" column="tipster_id" select="org.seat.mappers.UserMapper.selectByPrimaryKey">
+        </association>
+        <association property="seat" column="sid" select="org.seat.mappers.SeatMapper.getSeatById">
+        </association>
+    </resultMap>
+    <select id="getTipoffById" resultMap="tipoffmap">
+        select * from tipoff_records where tid=#{arg0}
+    </select>
+    <select id="getAllTipoffRecords" resultMap="tipoffmap">
+        select * from tipoff_records
+    </select>
+    <insert id="insertTipoff">
+        insert into tipoff_records values(null,#{arg0},#{arg1},#{arg2,jdbcType=TIMESTAMP},#{arg3},#{arg4})
+    </insert>
+    <delete id="deleteTipoff">
+        delete from tipoff_records where tid=#{arg0}
+    </delete>
+</mapper>
