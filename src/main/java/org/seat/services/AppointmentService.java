@@ -3,13 +3,12 @@ package org.seat.services;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.seat.beans.Announcement;
-import org.seat.beans.AnnouncementExample;
 import org.seat.beans.Appointment;
 import org.seat.mappers.AppointmentMapper;
 import org.seat.utils.AppointmentPage;
 import org.seat.utils.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,5 +43,11 @@ public class AppointmentService {
     }
     public Appointment getAppointmentById(int id){
         return mapper.getAppointmentById(id);
+    }
+
+    //todo 30s执行一次定时任务，自动释放过期座位
+    @Scheduled(fixedRate = 30000)
+    public void scheduledReleaseSeats(){
+
     }
 }
