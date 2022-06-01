@@ -1,7 +1,5 @@
 package org.seat.beans;
 
-import java.util.Date;
-
 public class Seat {
     private Integer sid;
     private Floor floor;
