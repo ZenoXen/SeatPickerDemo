@@ -1,4 +1,4 @@
-create table admin
+create table admins
 (
 	Admin_id int auto_increment,
 	Admin_name varchar(255) not null,
@@ -7,10 +7,10 @@ create table admin
 		unique (Admin_id)
 );
 
-alter table admin
+alter table admins
 	add primary key (Admin_id);
 
-create table announcement
+create table announcements
 (
 	Announcement_id int auto_increment,
 	Title varchar(255) not null,
@@ -20,10 +20,10 @@ create table announcement
 		unique (Announcement_id)
 );
 
-alter table announcement
+alter table announcements
 	add primary key (Announcement_id);
 
-create table appointment
+create table appointment_records
 (
 	aid int auto_increment,
 	uid int not null,
@@ -37,10 +37,10 @@ create table appointment
 		unique (aid)
 );
 
-alter table appointment
+alter table appointment_records
 	add primary key (aid);
 
-create table floor
+create table floors
 (
 	fid int auto_increment,
 	fname varchar(255) null,
@@ -50,10 +50,10 @@ create table floor
 		unique (fid)
 );
 
-alter table floor
+alter table floors
 	add primary key (fid);
 
-create table seat
+create table seats
 (
 	sid int auto_increment,
 	fid int not null,
@@ -66,10 +66,10 @@ create table seat
 		unique (sid)
 );
 
-alter table seat
+alter table seats
 	add primary key (sid);
 
-create table tipoff
+create table tipoff_records
 (
 	tid int auto_increment,
 	accused_id int not null,
@@ -81,10 +81,10 @@ create table tipoff
 		unique (tid)
 );
 
-alter table tipoff
+alter table tipoff_records
 	add primary key (tid);
 
-create table user
+create table users
 (
 	uid int auto_increment,
 	uname varchar(255) null,
@@ -95,10 +95,10 @@ create table user
 		unique (uid)
 );
 
-alter table user
+alter table users
 	add primary key (uid);
 
-create table violation
+create table violation_records
 (
 	vid int auto_increment,
 	uid int not null,
@@ -108,6 +108,6 @@ create table violation
 		unique (vid)
 );
 
-alter table violation
+alter table violation_records
 	add primary key (vid);
 

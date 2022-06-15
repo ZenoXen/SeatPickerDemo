@@ -3,6 +3,7 @@ package org.seat.services;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.seat.beans.Appointment;
 import org.seat.mappers.AppointmentMapper;
 import org.seat.utils.AppointmentPage;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Slf4j
 public class AppointmentService {
     @Autowired
     private AppointmentMapper mapper;
@@ -48,6 +50,7 @@ public class AppointmentService {
     //todo 30s执行一次定时任务，自动释放过期座位
     @Scheduled(fixedRate = 30000)
     public void scheduledReleaseSeats(){
+        log.info("自动释放已过期座位：");
 
     }
 }
