@@ -37,4 +37,7 @@
     <update id="updateCancelStatus">
         update appointment_records set iscanceled=1 where aid=#{arg0}
     </update>
+    <select id="findAllAppointsToRelease">
+        select aid from appointment_records where iscanceled=0 and register_time is null and isreleased=0 and release_time<NOW();
+    </select>
 </mapper>

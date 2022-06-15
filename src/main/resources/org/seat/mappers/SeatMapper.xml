@@ -47,4 +47,7 @@
             (null,#{seat.floor.fid},null,1,null,#{seat.rownum},#{seat.colnum})
         </foreach>
     </insert>
+    <update id="releaseSeats">
+        update seats set seat_status=1,aid=null,uid=null where aid in #{arg0}
+    </update>
 </mapper>

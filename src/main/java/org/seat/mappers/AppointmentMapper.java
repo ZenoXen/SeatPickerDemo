@@ -15,4 +15,5 @@ public interface AppointmentMapper {
     int updateAspan(int aid,int aspan);
     int updateReleaseStatus(int aid);
     int updateCancelStatus(int aid);
+    List<Integer> findAllAppointsToRelease();
 }

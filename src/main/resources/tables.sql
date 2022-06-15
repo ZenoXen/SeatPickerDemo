@@ -14,7 +14,7 @@ create table announcements
 (
 	Announcement_id int auto_increment,
 	Title varchar(255) not null,
-	Announcement_date date not null,
+	Announcement_date datetime not null,
 	Content varchar(255) null,
 	constraint announcement_announcement_id_uindex
 		unique (Announcement_id)
@@ -27,11 +27,11 @@ create table appointment_records
 (
 	aid int auto_increment,
 	uid int not null,
-	atime date null,
+	atime datetime null,
 	iscancelled tinyint null,
-	release_time date null,
+	release_time datetime null,
 	isreleased tinyint null,
-	register_time date null,
+	register_time datetime null,
 	aspan int null,
 	constraint appointment_aid_uindex
 		unique (aid)
@@ -73,7 +73,7 @@ create table tipoff_records
 (
 	tid int auto_increment,
 	accused_id int not null,
-	ttime date null,
+	ttime datetime null,
 	tipster_id int not null,
 	sid int not null,
 	remark varchar(255) null,
@@ -90,7 +90,7 @@ create table users
 	uname varchar(255) null,
 	upwd varchar(255) null,
 	isforbidden tinyint null,
-	unlock_time date null,
+	unlock_time datetime null,
 	constraint user_uid_uindex
 		unique (uid)
 );
@@ -102,7 +102,7 @@ create table violation_records
 (
 	vid int auto_increment,
 	uid int not null,
-	vtime date null,
+	vtime datetime null,
 	sid int not null,
 	constraint violation_vid_uindex
 		unique (vid)

@@ -15,4 +15,5 @@ public interface SeatMapper {
     Seat getSeatByAppointment(int aid);
     int releaseSeat(int fid,int rownum,int colnum);
     int registerSeat(int fid,int rownum,int colnum);
+    int releaseSeats(List<Integer> appointmentIds);
 }
