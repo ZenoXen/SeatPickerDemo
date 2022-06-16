@@ -26,7 +26,5 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" id="scannerConfigurer">
         <property name="basePackage" value="org.seat.mappers"/>
     </bean>
-    <task:annotation-driven executor="myExecutor" scheduler="myScheduler"/>
-    <task:executor id="myExecutor" pool-size="5"/>
-    <task:scheduler id="myScheduler" pool-size="10"/>
+    <task:annotation-driven/>
 </beans>
