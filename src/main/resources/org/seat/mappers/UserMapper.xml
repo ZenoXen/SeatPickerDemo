@@ -209,6 +209,6 @@
     where uid = #{uid,jdbcType=INTEGER}
   </update>
   <update id="unlockDisabledUsers">
-    update users set unlock_time=null,isforbidden=0 where unlock_time is not null and unlock_time<NOW()
+    update users set unlock_time=null,isforbidden=0 where unlock_time is not null and unlock_time &lt; NOW()
   </update>
 </mapper>

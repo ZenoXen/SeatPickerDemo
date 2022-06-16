@@ -3,6 +3,7 @@ package org.seat.services;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.seat.beans.Violation;
 import org.seat.mappers.UserMapper;
 import org.seat.mappers.ViolationMapper;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 @Service
+@Slf4j
 public class ViolationService {
     @Autowired
     private ViolationMapper violationMapper;
@@ -58,6 +60,7 @@ public class ViolationService {
     //定时任务解冻违规用户
     @Scheduled(fixedRate = 60000)
     public void scheduledUnlockAllViolationUser() {
+        log.info("自动解冻违规用户");
         userMapper.unlockDisabledUsers();
     }
 }

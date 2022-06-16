@@ -28,7 +28,7 @@ create table appointment_records
 	aid int auto_increment,
 	uid int not null,
 	atime datetime null,
-	iscancelled tinyint null,
+	iscanceled tinyint null,
 	release_time datetime null,
 	isreleased tinyint null,
 	register_time datetime null,
