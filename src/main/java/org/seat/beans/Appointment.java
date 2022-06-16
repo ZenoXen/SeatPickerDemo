@@ -6,7 +6,7 @@ public class Appointment {
     private Integer aid;
     private User user;
     private Date atime;
-    private byte isCanceled;
+    private byte isCanceled = 0;
     private Date releaseTime;
     private byte isReleased;
     private Date registerTime;

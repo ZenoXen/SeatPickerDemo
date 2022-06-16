@@ -4,6 +4,7 @@ public class Seat {
     private Integer sid;
     private Floor floor;
     private Appointment appointment;
+    //0座位不存在，不可用；1座位可选；2座位已选；3使用中
     private Integer seatStatus;
     private User user;
     private Integer rownum;

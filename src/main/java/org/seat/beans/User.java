@@ -9,7 +9,7 @@ public class User {
 
     private String upwd;
 
-    private Byte isforbidden;
+    private Byte isforbidden = 0;
 
     private Date unlockTime;
 

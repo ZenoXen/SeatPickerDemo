@@ -12,7 +12,7 @@ public class AppointmentUtils {
         user.setUid(uid);
         appointment.setUser(user);
         appointment.setAtime(atime);
-        appointment.setReleaseTime(releaseTime);;
+        appointment.setReleaseTime(releaseTime);
         return appointment;
     }
 }

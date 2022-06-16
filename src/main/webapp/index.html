@@ -30,7 +30,10 @@
 			var uname=getUserNameFromServer();
 			$("#logoffUname").text(uname['uname']);
 			$("#boxUname").text(uname['uname']);
-			$("#latestAnnouncement").text(getLatestAnnouncement()['title']);
+			var announcemment = getLatestAnnouncement();
+			if(announcemment){
+				$("#latestAnnouncement").text(announcemment['title']);
+			}
 			$("#exitLogin").on("click",function(){
 				exitLogin();
 			});
