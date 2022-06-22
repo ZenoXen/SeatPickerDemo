@@ -1,5 +1,6 @@
 package org.seat.beans;
 
+//管理用户表
 public class Admin {
     private Integer adminId;
 

@@ -1,6 +1,6 @@
 package org.seat.utils;
 
-public class TipoffEntity {
+public class TipoffRequest {
     private Integer fid;
     private Integer rownum;
     private Integer colnum;

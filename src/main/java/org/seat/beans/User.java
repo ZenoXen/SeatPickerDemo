@@ -2,6 +2,7 @@ package org.seat.beans;
 
 import java.util.Date;
 
+//选座系统用户表
 public class User {
     private Integer uid;
 
@@ -9,8 +10,10 @@ public class User {
 
     private String upwd;
 
+    //是否已被禁用，0未禁用，1已禁用
     private Byte isforbidden = 0;
 
+    //用户自动解冻时间
     private Date unlockTime;
 
     public Integer getUid() {

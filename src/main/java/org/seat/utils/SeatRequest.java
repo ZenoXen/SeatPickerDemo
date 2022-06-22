@@ -1,6 +1,6 @@
 package org.seat.utils;
 
-public class SeatEntity {
+public class SeatRequest {
     private Integer sid;
     private Integer fid;
     private Integer seatStatus;

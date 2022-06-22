@@ -6,7 +6,7 @@ import org.seat.services.SeatService;
 import org.seat.services.TipoffService;
 import org.seat.services.UserService;
 import org.seat.utils.Message;
-import org.seat.utils.TipoffEntity;
+import org.seat.utils.TipoffRequest;
 import org.seat.utils.TipoffPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ public class TipoffController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
-    public Message addTipoff(@RequestBody TipoffEntity entity, HttpSession session) {
+    public Message addTipoff(@RequestBody TipoffRequest entity, HttpSession session) {
         Message message = new Message();
         Seat seat = seatService.getSeatByLocation(entity.getFid(),
                 entity.getRownum(), entity.getColnum());
