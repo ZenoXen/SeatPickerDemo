@@ -1,13 +1,8 @@
 package org.seat.utils;
 
+import lombok.Data;
+
+@Data
 public class Message {
     private boolean isSuccessful;
-
-    public boolean isSuccessful() {
-        return isSuccessful;
-    }
-
-    public void setSuccessful(boolean successful) {
-        isSuccessful = successful;
-    }
 }
