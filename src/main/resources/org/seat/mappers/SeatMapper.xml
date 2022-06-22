@@ -48,6 +48,9 @@
         </foreach>
     </insert>
     <update id="releaseSeats">
-        update seats set seat_status=1,aid=null,uid=null where aid in #{arg0}
+        update seats set seat_status=1,aid=null,uid=null where aid in 
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
     </update>
 </mapper>
