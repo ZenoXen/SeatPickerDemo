@@ -1,9 +1,10 @@
 package org.seat.mappers;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.seat.beans.User;
 import org.seat.beans.UserExample;
+
+import java.util.List;
 
 public interface UserMapper {
     long countByExample(UserExample example);

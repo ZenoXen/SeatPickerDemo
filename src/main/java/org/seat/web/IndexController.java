@@ -8,11 +8,11 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class IndexController {
-    @RequestMapping(value = "/",method = RequestMethod.GET)
-    public String index(HttpSession session){
-        if(session.getAttribute("uname")!=null)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index(HttpSession session) {
+        if (session.getAttribute("uname") != null)
             return "index";
-        else if(session.getAttribute("adminName")!=null)
+        else if (session.getAttribute("adminName") != null)
             return "adminPage";
         return "login";
     }

@@ -1,6 +1,5 @@
 package org.seat.utils;
 
-import org.seat.beans.Announcement;
 import org.seat.beans.Tipoff;
 
 import java.util.List;

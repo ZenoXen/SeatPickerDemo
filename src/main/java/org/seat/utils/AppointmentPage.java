@@ -1,6 +1,5 @@
 package org.seat.utils;
 
-import org.seat.beans.Announcement;
 import org.seat.beans.Appointment;
 
 import java.util.List;

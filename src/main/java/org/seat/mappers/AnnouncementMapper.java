@@ -1,12 +1,14 @@
 package org.seat.mappers;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.seat.beans.Announcement;
 import org.seat.beans.AnnouncementExample;
 
+import java.util.List;
+
 public interface AnnouncementMapper {
     Announcement selectLatest();
+
     long countByExample(AnnouncementExample example);
 
     int deleteByExample(AnnouncementExample example);

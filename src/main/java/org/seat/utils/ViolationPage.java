@@ -1,6 +1,5 @@
 package org.seat.utils;
 
-import org.seat.beans.User;
 import org.seat.beans.Violation;
 
 import java.util.List;

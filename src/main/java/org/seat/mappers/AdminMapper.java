@@ -1,9 +1,10 @@
 package org.seat.mappers;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.seat.beans.Admin;
 import org.seat.beans.AdminExample;
+
+import java.util.List;
 
 public interface AdminMapper {
     long countByExample(AdminExample example);

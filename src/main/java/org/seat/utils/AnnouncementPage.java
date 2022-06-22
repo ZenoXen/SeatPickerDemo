@@ -1,7 +1,6 @@
 package org.seat.utils;
 
 import org.seat.beans.Announcement;
-import org.seat.beans.User;
 
 import java.util.List;
 

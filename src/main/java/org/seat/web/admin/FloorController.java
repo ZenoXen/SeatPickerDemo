@@ -8,32 +8,37 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RequestMapping(value = "/floor")
 @Controller
 public class FloorController {
     @Autowired
     private FloorService floorService;
+
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<Floor> floors(){
+    public List<Floor> floors() {
         return floorService.getAllFloors();
     }
+
     @ResponseBody
-    @RequestMapping(value = "/{fid}",method = RequestMethod.GET)
-    public Floor floor(@PathVariable("fid") int fid){
+    @RequestMapping(value = "/{fid}", method = RequestMethod.GET)
+    public Floor floor(@PathVariable("fid") int fid) {
         return floorService.getFloorById(fid);
     }
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
-    public Message addFloor(@RequestBody Floor floor){
-        Message message=new Message();
+    public Message addFloor(@RequestBody Floor floor) {
+        Message message = new Message();
         message.setSuccessful(floorService.addFloor(floor));
         return message;
     }
+
     @ResponseBody
-    @RequestMapping(value = "/{fid}",method = RequestMethod.DELETE)
-    public Message deleteFloor(@PathVariable("fid") int fid){
-        Message message=new Message();
+    @RequestMapping(value = "/{fid}", method = RequestMethod.DELETE)
+    public Message deleteFloor(@PathVariable("fid") int fid) {
+        Message message = new Message();
         message.setSuccessful(floorService.deleteFloor(fid));
         return message;
     }

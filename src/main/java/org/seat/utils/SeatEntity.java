@@ -1,8 +1,5 @@
 package org.seat.utils;
 
-import org.seat.beans.Floor;
-import org.seat.beans.User;
-
 public class SeatEntity {
     private Integer sid;
     private Integer fid;

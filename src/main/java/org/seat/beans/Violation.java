@@ -7,8 +7,13 @@ public class Violation {
     private User user;
     private Date vtime;
     private Seat seat;
+
     public Integer getVid() {
         return vid;
+    }
+
+    public void setVid(Integer vid) {
+        this.vid = vid;
     }
 
     @Override
@@ -27,10 +32,6 @@ public class Violation {
 
     public void setSeat(Seat seat) {
         this.seat = seat;
-    }
-
-    public void setVid(Integer vid) {
-        this.vid = vid;
     }
 
     public User getUser() {

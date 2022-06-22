@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 @Service
 @Slf4j
 public class ViolationService {
@@ -40,6 +39,7 @@ public class ViolationService {
         return violationPage;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public boolean deleteViolation(int vid) {
         return violationMapper.deleteViolation(vid) > 0;
     }

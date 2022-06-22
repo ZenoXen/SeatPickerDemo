@@ -21,31 +21,34 @@ public class AccountController {
     private AdminService adminService;
     @Autowired
     private UserService userService;
+
     @ResponseBody
-    @RequestMapping(value = "/user",method = RequestMethod.POST)
-    public Message userLogin(@RequestBody User user,HttpSession session){
-        Message message=new Message();
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public Message userLogin(@RequestBody User user, HttpSession session) {
+        Message message = new Message();
         message.setSuccessful(userService.checkUser(user));
-        if(message.isSuccessful())
-            session.setAttribute("uname",user.getUname());
+        if (message.isSuccessful())
+            session.setAttribute("uname", user.getUname());
         return message;
     }
+
     @ResponseBody
-    @RequestMapping(value = "/admin",method = RequestMethod.POST)
-    public Message adminLogin(@RequestBody Admin admin,HttpSession session){
-        Message message=new Message();
+    @RequestMapping(value = "/admin", method = RequestMethod.POST)
+    public Message adminLogin(@RequestBody Admin admin, HttpSession session) {
+        Message message = new Message();
         message.setSuccessful(adminService.checkAdmin(admin));
-        if(message.isSuccessful())
-            session.setAttribute("adminName",admin.getAdminName());
+        if (message.isSuccessful())
+            session.setAttribute("adminName", admin.getAdminName());
         return message;
     }
+
     @ResponseBody
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
-    public Message userRegister(@RequestBody User user,HttpSession session){
-        Message message=new Message();
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public Message userRegister(@RequestBody User user, HttpSession session) {
+        Message message = new Message();
         message.setSuccessful(userService.insertUser(user));
-        if(message.isSuccessful())
-            session.setAttribute("uname",user.getUname());
+        if (message.isSuccessful())
+            session.setAttribute("uname", user.getUname());
         return message;
     }
 }
